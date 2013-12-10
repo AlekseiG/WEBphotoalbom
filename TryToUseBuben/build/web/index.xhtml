@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <f:view>
+        <h:head>
+            <title>Facelet Title</title>
+        </h:head>
+        <h:body>
+            <h:form id="photo_form">      
+                <h:messages showDetail="true"></h:messages>
+                <table>
+                    <tr>
+                        <td>|   id</td>
+                        <td>|   owner</td>
+                        <td>|   name</td>                        
+                        <td>|</td>
+                    </tr>                    
+                    <ui:repeat value="#{PhotoBean.getPhotos()}" var="phot">
+                        <tr>
+                            <td>| #{phot.id}</td>
+                            <td>| #{phot.owner}</td>
+                            <td>| #{phot.name}</td>                                
+                            <td>|
+                                <h:commandButton id="hello" value="Delete" actionListener="#{photoBean.deletePhoto(phot.id)}">
+                                    <f:ajax execute="@this" render=":photo_form"/>
+                                </h:commandButton>
+                            </td>
+                            <td>|</td>
+                        </tr>
+                    </ui:repeat>                    
+                </table>
+            </h:form>              
+            <h:form id="create_form">
+                <h:messages id="m"/>
+                <h:panelGrid columns="2">
+                    id: <h:inputText value="#{photoEditBean.id}"/>
+                    owner: <h:inputText value="#{photoEditBean.owner}"/>
+                    name: <h:inputText value="#{photoEditBean.name}"/>
+                </h:panelGrid>
+                <h:commandButton value="Create" actionListener="#{photoBean.createPhoto(photo)}">
+                    <f:ajax execute="@form" render=":photo_form :create_form"/>
+                </h:commandButton>                
+            </h:form>      
+        </h:body>
+    </f:view>
+</html>
